@@ -343,11 +343,11 @@ const initializeBattle = () => {
 
 const battleActionHandler = (battleAction) => {
   let elem = document.querySelector('.battle-log')
-  switch (battleAction) {
-
+  switch (battleAction) {   
     case 'attack':
       let attackPower = player.attack+player.attackBonus;
       let damage = Math.floor((attackPower*10*Math.random())/(monster.defense*(0.8)));
+       if(player.speed> monster.speed){
       monster.health = monster.health - damage;
       if (monster.health > 0) {
         console.log('You attack for', damage);
@@ -362,6 +362,27 @@ const battleActionHandler = (battleAction) => {
       }
       document.getElementById('monster-health').textContent = monster.health;
       break;
+       }
+      
+      else
+      {
+           monsterAttack();
+          monster.health = monster.health - damage;
+      if (monster.health > 0) {
+        console.log('You attack for', damage);
+        document.getElementById('monster-health-bar').style.width = Math.floor((monster.health/monster.maxHealth*100)) + '%';
+        elem.innerHTML += 'You attack ' + monster.name + ' for ' + damage + ' health! </br>';
+        scrollLog(elem);
+        monsterAttack();
+      } else {
+        monster.health = 0;
+        console.log(monster.name, 'is dead yo!');
+        updateXPAndGoldAndEndBattle();
+      }
+      document.getElementById('monster-health').textContent = monster.health;
+      break;
+        
+      }
 
     case 'hp-potion':
       if (player.items.potions > 0 && player.health < player.maxHealth) {
