@@ -5,6 +5,7 @@ export const player = {
   attackBonus: 0,
   defense: 10,
   defenseBonus: 0,
+  speed: 5, //if the speed number is higher, player go first
   gold: 0,
   xp: 0,
   xpToNextLevel: 100,
